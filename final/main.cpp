@@ -41,7 +41,7 @@ void state0(){
             else if(xd <= -55) car.turn(15,-0.1);
             else car.goStraight(20);
             if(pre_state == 1){
-               if(val < 10 && coordination[10] > 80) {state = 3;} 
+               if(val < 6 || coordination[10] > 85) {state = 3;} 
             }
             if(pre_state == 2){
                 if(coordination[6] > -5){ 
@@ -80,19 +80,19 @@ void state1(){
         }
     }
 }
-void state2(){
-    while(1){
-        printf("222\n");
-        if(state == 2){
-            printf("gogogogogogogogoogogogogogog\n");
-            int xd = (coordination[0] + coordination[1])/2;
-            if(xd >= 65) car.turn(15,0.1);
-            else if(xd <= -55) car.turn(15,-0.1);
-            else car.goStraight(20);
-            if(val < 4 && coordination[10] > 90) {state = 3; printf("state = %d\n",state);}
-        }
-    }
-}
+// void state2(){
+//     while(1){
+//         //printf("222\n");
+//         if(state == 2){
+//             //printf("gogogogogogogogoogogogogogog\n");
+//             int xd = (coordination[0] + coordination[1])/2;
+//             if(xd >= 65) car.turn(15,0.1);
+//             else if(xd <= -55) car.turn(15,-0.1);
+//             else car.goStraight(20);
+//             if(val < 5 && coordination[10] > 80) {state = 3; printf("state = %d\n",state);}
+//         }
+//     }
+// }
 void state3(){
     while(1){
         printf("333\n");
@@ -111,21 +111,22 @@ void state3(){
         }
     }
 }
-void state4(){
-    while(1){
-        printf("444\n");
-        int xd = (coordination[0] + coordination[1])/2;
-        if(state == 4){
-            if(xd >= 65) car.turn(15,0.1);
-            else if(xd <= -55) car.turn(15,-0.1);
-            else car.goStraight(20);
-            state = 6;
-            //printf("state = %d\n",state);
-        }
-    }
-}
+// void state4(){
+//     while(1){
+//         printf("444\n");
+//         int xd = (coordination[0] + coordination[1])/2;
+//         if(state == 4){
+//             if(xd >= 65) car.turn(15,0.1);
+//             else if(xd <= -55) car.turn(15,-0.1);
+//             else car.goStraight(20);
+//             state = 6;
+//             //printf("state = %d\n",state);
+//         }
+//     }
+// }
 void PING(){
     while(1){
+        printf("444\n");
         ping.output();
         ping = 0; wait_us(200);
         ping = 1; wait_us(5);
@@ -156,7 +157,7 @@ int main(){
     //thread3.start(state2);
     thread4.start(state3);
    // thread5.start(state4);
-    //thread6.start(PING);
+    thread5.start(PING);
 
     while(1){
         // switch(state){
@@ -212,7 +213,7 @@ int main(){
                     //printf("num: %d %d %d\n", num[0], num[1], num[2]);
                     i = 0;
                     //printf("\nC%d: %d\n",type,coordination[type]);
-                    printf("state = %d\n", state);
+                    //printf("state = %d\n", state);
                     num[0] = 0; num[1] = 0; num[2] = 0; num[3] = 0;
                 }
                 else{
@@ -224,11 +225,10 @@ int main(){
                     //printf("num: %d %d %d\n", num[1], num[2], num[3]);
                     i = 0;
                     printf("C%d: %d\n",type,coordination[type]);
-                    printf("state = %d\n", state);
+                    //printf("state = %d\n", state);
                     if(coordination[6] > -5 && state == 0){state = 1; printf("state = %d\n",state);}
                     num[0] = 0; num[1] = 0; num[2] = 0; num[3] = 0;
-                }
-                
+                } 
             }
   
         }
