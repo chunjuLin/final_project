@@ -41,12 +41,13 @@ void state0(){
             else if(xd <= -55) car.turn(15,-0.1);
             else car.goStraight(20);
             if(pre_state == 1){
-               if(val < 6 || coordination[10] > 85) {state = 3;} 
+               if(val < 6 || coordination[10] > 85) {state = 3; xbee.write("stage 3", 7);} 
             }
             if(pre_state == 2){
                 if(coordination[6] > -5){ 
                     car.stop();
                     state = 6;
+                    xbee.write("stage 5", 7);
                 }
             }
             //printf("coor6 = %d\n", coordination[6]);
@@ -75,6 +76,7 @@ void state1(){
             car.stop();
             ThisThread::sleep_for(3000ms);
             state = 0;
+            xbee.write("stage 2", 7);
             pre_state = 1;
             //printf("state = %d\n",state);
         }
@@ -105,6 +107,7 @@ void state3(){
             //printf("first2\n");
             car.stop();
             state = 0;
+            xbee.write("stage 4", 7);
             pre_state = 2;
             coordination[6] = -400;
             //printf("state = %d\n",state);
@@ -147,7 +150,7 @@ void PING(){
 }
 
 int main(){
-    //xbee.write("+++",3);
+    xbee.write("stage 0",7);
     encoder_ticker.attach(&encoder_control, 10ms);
     pc.set_baud(9600);
     uart.set_baud(9600);
@@ -226,7 +229,7 @@ int main(){
                     i = 0;
                     printf("C%d: %d\n",type,coordination[type]);
                     //printf("state = %d\n", state);
-                    if(coordination[6] > -5 && state == 0){state = 1; printf("state = %d\n",state);}
+                    if(coordination[6] > -5 && state == 0){state = 1; xbee.write("stage 1",7);}
                     num[0] = 0; num[1] = 0; num[2] = 0; num[3] = 0;
                 } 
             }
